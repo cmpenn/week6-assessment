@@ -3,6 +3,7 @@ const path = require('path')
 const app = express()
 const {bots, playerRecord} = require('./data')
 const {shuffleArray} = require('./utils')
+require('dotenv').config()
 
 app.use(express.json())
 
@@ -18,13 +19,15 @@ var rollbar = new Rollbar({
 rollbar.log('Hello world!')
 
 app.get('/', (req, res) =>{
-    res.sendFile(path.join(__dirname, '/public/index.html'))
+    res.sendFile(path.join(__dirname, './public/index.html'))
 })
+
 app.get('/styles', (req, res) =>{
-    res.sendFile(path.join(__dirname, '/public/index.css'))
+    res.sendFile(path.join(__dirname, './public/index.css'))
 })
+
 app.get('/js', (req, res) =>{
-    res.sendFile(path.join(__dirname, '/public/index.js'))
+    res.sendFile(path.join(__dirname, './public/index.js'))
 })
 
 app.get('/api/robots', (req, res) => {
