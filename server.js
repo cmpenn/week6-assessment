@@ -15,10 +15,9 @@ var rollbar = new Rollbar({
   captureUnhandledRejections: true,
 })
 
-// record a generic message and send it to Rollbar
-rollbar.log('Hello world!')
 
 app.get('/', (req, res) =>{
+    rollbar.info('someone visited your website')
     res.sendFile(path.join(__dirname, './public/index.html'))
 })
 
@@ -34,9 +33,9 @@ app.get('/api/robots', (req, res) => {
     try {
         res.status(200).send(botsArr)
     } catch (error) {
+        rollbar.error("See all is not working!")
         console.log('ERROR GETTING BOTS', error)
         res.sendStatus(400)
-        rollbar.error("See all is not working!")
     }
 })
 
@@ -48,6 +47,7 @@ app.get('/api/robots/five', (req, res) => {
         res.status(200).send({choices, compDuo})
         rollbar.info('choices being looked at!')
     } catch (error) {
+        rollbar.critical('no bots loading')
         console.log('ERROR GETTING FIVE BOTS', error)
         res.sendStatus(400)
     }
